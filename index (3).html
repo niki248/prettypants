@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentin Studio · Pretty Pants — Molly &amp; My</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;1,400;1,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blush: #FAEDF0;
+    --blush-deep: #EFCBD6;
+    --card: #FFFFFF;
+    --ink: #2B2129;
+    --muted: #8B7680;
+    --wine: #7D3B54;
+    --wine-dark: #602A40;
+    --line: #E7D6DC;
+    --swatch-a: #E9C2CE;
+    --swatch-b: #D9A6B6;
+    --swatch-c: #C98A9E;
+    --swatch-d: #B96F87;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--blush);
+    color: var(--ink);
+    font-family: 'Work Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .hero {
+    background: linear-gradient(160deg, var(--blush) 0%, var(--blush-deep) 100%);
+    padding: 4.5rem 1.5rem 3rem;
+    text-align: left;
+  }
+
+  .hero-inner {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .kicker {
+    font-size: 0.95rem;
+    color: var(--wine);
+    margin: 0 0 0.9rem;
+    letter-spacing: 0.01em;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(2.1rem, 5vw, 3rem);
+    line-height: 1.1;
+    margin: 0 0 1rem;
+    color: var(--wine-dark);
+  }
+
+  .hero p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 52ch;
+    margin: 0;
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    transform: translateY(2rem);
+  }
+
+  .swatch {
+    aspect-ratio: 3 / 4;
+    display: flex;
+    align-items: flex-end;
+    padding: 0.6rem;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .swatch img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .swatch:nth-child(1) { background: var(--swatch-a); border-radius: 4px 0 0 4px; }
+  .swatch:nth-child(2) { background: var(--swatch-b); }
+  .swatch:nth-child(3) { background: var(--swatch-c); }
+  .swatch:nth-child(4) { background: var(--swatch-d); border-radius: 0 4px 4px 0; }
+
+  main {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 3.5rem 1.5rem 5rem;
+  }
+
+  .panel {
+    background: var(--card);
+    border-radius: 6px;
+    padding: 0.5rem 2rem;
+    box-shadow: 0 20px 50px -30px rgba(96, 42, 64, 0.35);
+  }
+
+  .field {
+    padding: 1.9rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .field:last-of-type {
+    border-bottom: none;
+  }
+
+  label.question {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin-bottom: 0.85rem;
+    color: var(--ink);
+  }
+
+  .required {
+    color: var(--wine);
+  }
+
+  .hint {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: -0.5rem 0 0.9rem;
+  }
+
+  input[type="email"],
+  textarea {
+    width: 100%;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 1rem;
+    color: var(--ink);
+    border: none;
+    border-bottom: 1.5px solid var(--line);
+    background: transparent;
+    padding: 0.5rem 0.1rem;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.15s ease;
+  }
+
+  input[type="email"]:focus,
+  textarea:focus {
+    border-bottom-color: var(--wine);
+  }
+
+  textarea { min-height: 90px; }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+  .option input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--wine);
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .upload-zone {
+    border: 1.5px dashed var(--blush-deep);
+    border-radius: 6px;
+    padding: 1.6rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+    position: relative;
+  }
+
+  .upload-zone.drag-over {
+    border-color: var(--wine);
+    background: var(--blush);
+  }
+
+  .upload-zone p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  .upload-zone p.filename {
+    color: var(--wine-dark);
+    font-weight: 500;
+  }
+
+  .upload-zone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .preview {
+    margin-top: 1rem;
+    max-width: 160px;
+    border-radius: 4px;
+    display: none;
+  }
+
+  .submit-row {
+    padding: 2rem 0 0.5rem;
+  }
+
+  button[type="submit"] {
+    background: var(--wine);
+    color: #fff;
+    border: none;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.85rem 1.9rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  button[type="submit"]:hover { background: var(--wine-dark); }
+  button[type="submit"]:disabled { opacity: 0.6; cursor: default; }
+
+  .error-text {
+    color: #A6334A;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    display: none;
+  }
+
+  .thanks {
+    display: none;
+    text-align: left;
+    padding: 1rem 0 2rem;
+  }
+
+  .thanks h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.7rem;
+    color: var(--wine-dark);
+    margin: 0 0 0.6rem;
+  }
+
+  .thanks p {
+    color: var(--ink);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  footer {
+    text-align: left;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 480px) {
+    .panel { padding: 0.5rem 1.25rem; }
+    .hero { padding: 3.5rem 1.25rem 2.5rem; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <p class="kicker">Molly &amp; My · Valentin Studio</p>
+      <h1>Pretty Pants — hvad synes du?</h1>
+      <p>Vi elsker dem, og mange hos Molly &amp; My har dem som favoritter. Men det er jeres mening, der tæller — brug to minutter på at fortælle os, hvad I synes.</p>
+    </div>
+  </div>
+
+  <div class="swatches">
+    <div class="swatch"></div>
+    <div class="swatch"></div>
+    <div class="swatch"></div>
+    <div class="swatch"></div>
+  </div>
+
+  <main>
+    <div class="panel">
+      <form
+        name="pretty-pants-feedback"
+        id="feedback-form"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        enctype="multipart/form-data"
+      >
+        <input type="hidden" name="form-name" value="pretty-pants-feedback">
+        <p style="display:none;">
+          <label>Udfyld ikke dette felt: <input name="bot-field"></label>
+        </p>
+
+        <div class="field">
+          <label class="question" for="email">Mailadresse <span class="required">*</span></label>
+          <input type="email" id="email" name="email" required placeholder="din@mail.dk">
+        </div>
+
+        <div class="field">
+          <label class="question" for="opinion">Din mening om Pretty Pants?</label>
+          <textarea id="opinion" name="opinion" placeholder="Dit svar"></textarea>
+        </div>
+
+        <div class="field">
+          <label class="question">Må vi bruge det som citat?</label>
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="quote-permission" value="Ja det må I gerne">
+              Ja det må I gerne
+            </label>
+            <label class="option">
+              <input type="radio" name="quote-permission" value="Nej tak">
+              Nej tak
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="question">Må vi se dem på?</label>
+          <p class="hint">Må vi vise et billede af dig i Pretty Pants, fx på Instagram eller på hjemmesiden?</p>
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="photo-permission" value="Ja det må I gerne">
+              Ja det må I gerne
+            </label>
+            <label class="option">
+              <input type="radio" name="photo-permission" value="Nej tak">
+              Nej tak
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="question" for="photo">Upload et billede</label>
+          <p class="hint">Valgfrit — kun relevant hvis du sagde ja ovenfor.</p>
+          <div class="upload-zone" id="upload-zone">
+            <p id="upload-label">Træk et billede herhen, eller klik for at vælge</p>
+            <input type="file" id="photo" name="photo" accept="image/*">
+          </div>
+          <img id="preview" class="preview" alt="Forhåndsvisning af dit billede">
+        </div>
+
+        <div class="submit-row">
+          <button type="submit" id="submit-btn">Send svar</button>
+          <p class="error-text" id="error-text">Der gik noget galt — prøv igen om lidt.</p>
+        </div>
+      </form>
+
+      <div class="thanks" id="thanks">
+        <h2>Tak for dit svar</h2>
+        <p>Vi har modtaget det, du har delt med os. Skriv endelig igen, hvis du kommer i tanke om mere.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Molly &amp; My · dine svar bruges kun internt til at forstå, hvad I synes om Pretty Pants.
+  </footer>
+
+<script>
+  const form = document.getElementById('feedback-form');
+  const panel = form.parentElement;
+  const thanks = document.getElementById('thanks');
+  const submitBtn = document.getElementById('submit-btn');
+  const errorText = document.getElementById('error-text');
+
+  const uploadZone = document.getElementById('upload-zone');
+  const fileInput = document.getElementById('photo');
+  const uploadLabel = document.getElementById('upload-label');
+  const preview = document.getElementById('preview');
+
+  function handleFile(file) {
+    if (!file) return;
+    uploadLabel.textContent = file.name;
+    uploadLabel.classList.add('filename');
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  fileInput.addEventListener('change', () => handleFile(fileInput.files[0]));
+
+  ['dragover'].forEach(evt => {
+    uploadZone.addEventListener(evt, (e) => {
+      e.preventDefault();
+      uploadZone.classList.add('drag-over');
+    });
+  });
+
+  ['dragleave', 'drop'].forEach(evt => {
+    uploadZone.addEventListener(evt, (e) => {
+      e.preventDefault();
+      uploadZone.classList.remove('drag-over');
+    });
+  });
+
+  uploadZone.addEventListener('drop', (e) => {
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      fileInput.files = e.dataTransfer.files;
+      handleFile(file);
+    }
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    errorText.style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sender...';
+
+    const formData = new FormData(form);
+
+    fetch('/', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        form.style.display = 'none';
+        thanks.style.display = 'block';
+      })
+      .catch(() => {
+        errorText.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send svar';
+      });
+  });
+</script>
+
+</body>
+</html>
